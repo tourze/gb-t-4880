@@ -76,7 +76,6 @@ class Alpha2CodeTest extends TestCase
             try {
                 $label = $case->getLabel();
                 $this->assertNotEmpty($label, "枚举值 {$case->name} 返回空标签");
-                $this->assertIsString($label, "枚举值 {$case->name} 的标签不是字符串");
             } catch (\UnhandledMatchError $e) {
                 $this->fail("枚举值 {$case->name} 未在getLabel方法中处理");
             }
@@ -84,27 +83,27 @@ class Alpha2CodeTest extends TestCase
     }
 
     /**
-     * 测试Itemable接口基本功能
+     * 测试接口基本功能
      */
-    public function testItemableInterface()
+    public function testInterfaceImplementation()
     {
-        // 验证Alpha2Code实现了Itemable接口
-        $this->assertTrue(
-            is_subclass_of(Alpha2Code::class, 'Tourze\EnumExtra\Itemable'),
-            'Alpha2Code没有实现Itemable接口'
-        );
-    }
-
-    /**
-     * 测试Selectable接口基本功能
-     */
-    public function testSelectableInterface()
-    {
-        // 验证Alpha2Code实现了Selectable接口
-        $this->assertTrue(
-            is_subclass_of(Alpha2Code::class, 'Tourze\EnumExtra\Selectable'),
-            'Alpha2Code没有实现Selectable接口'
-        );
+        // 测试ItemTrait提供的toSelectItem方法
+        $selectData = Alpha2Code::Chinese->toSelectItem();
+        $this->assertArrayHasKey('value', $selectData);
+        $this->assertArrayHasKey('label', $selectData);
+        $this->assertSame('zh', $selectData['value']);
+        $this->assertSame('汉语', $selectData['label']);
+        
+        // 测试ItemTrait提供的toArray方法
+        $arrayData = Alpha2Code::Chinese->toArray();
+        $this->assertArrayHasKey('value', $arrayData);
+        $this->assertArrayHasKey('label', $arrayData);
+        $this->assertSame('zh', $arrayData['value']);
+        $this->assertSame('汉语', $arrayData['label']);
+        
+        // 测试SelectTrait提供的genOptions静态方法
+        $options = Alpha2Code::genOptions();
+        $this->assertGreaterThan(170, count($options));
     }
 
     /**
