@@ -3,7 +3,7 @@
   "description": "GB/T 4880 中国国家标准语言代码库",
   "license": "MIT",
   "require": {
-    "tourze/enum-extra": "1.*"
+    "tourze/enum-extra": "1.0.*"
   },
   "require-dev": {
     "phpstan/phpstan": "^2.1",
